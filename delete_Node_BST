@@ -1,0 +1,76 @@
+import java.util.*;
+public class JavaBasics{
+    public static class Node{
+        int data;
+        Node left;
+        Node right;
+        public Node(int data){
+            this.data= data;
+            this.left= null;
+            this.right= null;
+
+        }
+    }
+    public static Node inorder(Node newNode){
+       
+          while(newNode.left != null){
+            newNode = newNode.left;
+          }
+          return newNode;
+    }
+       public static Node value(Node newNode,int val){
+        if (newNode == null) {
+            return null;
+        }
+          if(newNode.data < val){
+            newNode.right = value(newNode.right, val);
+          }
+         else if(newNode.data >val){
+            newNode.left= value(newNode.left, val);
+          }else{
+            if(newNode.left == null && newNode.right== null){
+            
+            return null;
+           }
+           if(newNode.left == null){
+           return  newNode.right;
+      
+           }else if(newNode.right == null){
+            return  newNode.left;
+           }
+          else
+              { Node root = inorder(newNode.right);
+               newNode.data= root.data;
+               newNode.right = value(newNode.right, root.data);
+               return newNode;}
+           
+       
+    }
+    return newNode;
+       }
+       public static void inorders(Node newNode){
+        if(newNode == null){
+            return ;
+        }
+         inorders(newNode.left);
+         System.out.print(newNode.data+" ");
+         inorders(newNode.right);
+       }
+       
+    public static void main(String args[]) {
+      Node   newNode  = new Node(8);
+      newNode.left  = new Node(5);
+      newNode.right  = new Node(10);
+
+      newNode.left.left  = new Node(3);
+      newNode.left.right  = new Node(6);
+      newNode.left.left.left  = new Node(1);
+      newNode.left.left.right  = new Node(4);
+
+      newNode.right.right  = new Node(11);
+      newNode.right.right.right = new Node(14);
+      newNode =value(newNode, 11);
+      inorders(newNode);
+    }
+
+}
